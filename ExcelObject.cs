@@ -87,19 +87,24 @@ namespace ExcelService {
                                 var fieldSettings = (Dictionary<string, FieldSettings>)ColSetting;
 
                                 if (fieldSettings.ContainsKey(rowInfo.Name)) {
-                                    worksheet.Cells[1, colIdx].Value = fieldSettings[rowInfo.Name].DisplayName;
+
+                                    int displayIdx = colIdx;
+                                    if (fieldSettings[rowInfo.Name].DisplayIndex > 0)
+                                        displayIdx = fieldSettings[rowInfo.Name].DisplayIndex;
+
+                                    worksheet.Cells[1, displayIdx].Value = fieldSettings[rowInfo.Name].DisplayName;
 
                                     if (fieldSettings[rowInfo.Name].AutoFitColumn)
-                                        worksheet.Cells[1, colIdx].AutoFitColumns();
+                                        worksheet.Cells[1, displayIdx].AutoFitColumns();
                                     if (convertOptions[optionKeyName].BoldHeader)
-                                        worksheet.Cells[1, colIdx].Style.Font.Bold = true;
+                                        worksheet.Cells[1, displayIdx].Style.Font.Bold = true;
                                     if (convertOptions[optionKeyName].HeaderBackgroundColor != null) {
                                         ExcelColor excelColor = (ExcelColor)convertOptions[optionKeyName].HeaderBackgroundColor;
-                                        worksheet.Cells[1, colIdx].Style.SetBackgroundColor(Color.FromArgb(excelColor.A, excelColor.R, excelColor.G, excelColor.B));
+                                        worksheet.Cells[1, displayIdx].Style.SetBackgroundColor(Color.FromArgb(excelColor.A, excelColor.R, excelColor.G, excelColor.B));
                                     }
                                     if (convertOptions[optionKeyName].HeaderFontColor != null) {
                                         ExcelColor excelColor = (ExcelColor)convertOptions[optionKeyName].HeaderFontColor;
-                                        worksheet.Cells[1, colIdx].Style.SetFontColor(Color.FromArgb(excelColor.A, excelColor.R, excelColor.G, excelColor.B));
+                                        worksheet.Cells[1, displayIdx].Style.SetFontColor(Color.FromArgb(excelColor.A, excelColor.R, excelColor.G, excelColor.B));
                                     }
 
                                     colIdx++;
@@ -123,11 +128,15 @@ namespace ExcelService {
                                 if (ColSetting.GetType().Equals(typeof(Dictionary<string, FieldSettings>))) {
                                     
                                     var fieldSettings = (Dictionary<string, FieldSettings>)ColSetting;
+                                    int displayIdx = colIdx;
 
                                     if (fieldSettings.ContainsKey(rowInfo.Name)) {
                                         var cellValue = rowInfo.GetValue(rowObj);
                                         //TypeCode typeCode = Type.GetTypeCode(rowInfo.PropertyType);
                                         TypeCode typeCode = Type.GetTypeCode(DataConverter.GetDataType(cellValue));
+
+                                        if (fieldSettings[rowInfo.Name].DisplayIndex > 0)
+                                            displayIdx = fieldSettings[rowInfo.Name].DisplayIndex;
 
                                         switch (typeCode) {
                                             case TypeCode.DateTime:
@@ -145,11 +154,11 @@ namespace ExcelService {
                                                 break;
                                         }
 
-                                        worksheet.Cells[rowIdx, colIdx].Value = cellValue;
+                                        worksheet.Cells[rowIdx, displayIdx].Value = cellValue;
 
                                         if (fieldSettings[rowInfo.Name].AutoFitColumn) {
                                             //worksheet.Cells[rowIdx, colIdx].AutoFitColumns();
-                                            worksheet.Column(colIdx).AutoFit();
+                                            worksheet.Column(displayIdx).AutoFit();
                                         }
 
                                         colIdx++;

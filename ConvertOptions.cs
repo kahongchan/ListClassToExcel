@@ -20,7 +20,8 @@ namespace ExcelService {
         public Dictionary<string, FieldSettings> FieldSettings { get; set; }
     }
 
-    public class FieldSettings:Attribute {
+    public class FieldSettings : Attribute {
+        public int DisplayIndex { get; set; } = 0;
         public bool AutoFitColumn { get; set; }
         public string DisplayName { get; set; }
         public string DisplayFormat { get; set; }
