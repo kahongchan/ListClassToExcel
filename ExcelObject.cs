@@ -4,6 +4,7 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Data;
+using System.Dynamic;
 using System.Reflection;
 using System.Drawing;
 
@@ -11,7 +12,7 @@ using EPPlus;
 using EPPlus.Core.Extensions;
 using OfficeOpenXml;
 
-using DataTools;
+// using DataTools;
 using Microsoft.Extensions.Logging;
 using Serilog;
 using EPPlus.Core.Extensions.Style;
@@ -24,6 +25,9 @@ namespace ExcelService {
 
         private readonly Serilog.ILogger _log = Log.ForContext(typeof(ExcelObject));
 
+        public static bool IsNullable<T>(T t) { return false; }
+        public static bool IsNullable<T>(T? t) where T : struct { return true; }
+
         public ExcelObject() {
             log("Excel service Started.");
         }
@@ -33,6 +37,14 @@ namespace ExcelService {
                 excelPackage.Dispose();
             }
             log("Excel service Disposed.");
+        }
+        public static Type GetDataType<T>(T val) {
+            if (IsNullable(val)) {
+                var propType = Nullable.GetUnderlyingType(val.GetType());
+                return propType;
+            } 
+
+            return val.GetType();
         }
 
         public void initExcelPackage() {
@@ -133,7 +145,7 @@ namespace ExcelService {
                                     if (fieldSettings.ContainsKey(rowInfo.Name)) {
                                         var cellValue = rowInfo.GetValue(rowObj);
                                         //TypeCode typeCode = Type.GetTypeCode(rowInfo.PropertyType);
-                                        TypeCode typeCode = Type.GetTypeCode(DataConverter.GetDataType(cellValue));
+                                        TypeCode typeCode = Type.GetTypeCode(GetDataType(cellValue));
 
                                         if (fieldSettings[rowInfo.Name].DisplayIndex > 0)
                                             displayIdx = fieldSettings[rowInfo.Name].DisplayIndex;
