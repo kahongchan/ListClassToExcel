@@ -30,7 +30,8 @@ jobs:
     - name: Test
       run: dotnet test --no-build --verbosity normal
     - name: Publish
-      uses: brandedoutcast/publish-nuget@v2.5.2
-      with:
-        PROJECT_FILE_PATH: ListClassToExcel/ExcelService.csproj
-        NUGET_KEY: ${{secrets.NUGET_API_KEY}}
+      run: dotnet nuget push "bin/Release/ListClassToExcel.1.0.1.nupkg" --source "github"
+      # uses: brandedoutcast/publish-nuget@v2.5.2
+      # with:
+        # PROJECT_FILE_PATH: ListClassToExcel/ExcelService.csproj
+        # NUGET_KEY: ${{secrets.NUGET_API_KEY}}
