@@ -30,7 +30,7 @@ jobs:
     - name: Test
       run: dotnet test --no-build --verbosity normal
     - name: Publish
-      run: dotnet nuget push "bin/Release/ListClassToExcel.1.0.1.nupkg" --source "github"
+      run: dotnet nuget push ./<project>/out/*.nupkg --skip-duplicate --no-symbols true --source "github"
       # uses: brandedoutcast/publish-nuget@v2.5.2
       # with:
         # PROJECT_FILE_PATH: ListClassToExcel/ExcelService.csproj
