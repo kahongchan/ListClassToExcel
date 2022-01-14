@@ -24,7 +24,7 @@ jobs:
     - name: Restore dependencies
       run: dotnet restore
       env:
-        NUGET_AUTH_TOKEN:  ${{secrets.NUGET_API_KEY}}
+        GITHUB_TOKEN:  ${{secrets.NUGET_API_KEY}}
     - name: Build
       run: dotnet build --no-restore -c Release
     - name: Test
