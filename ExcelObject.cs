@@ -30,6 +30,7 @@ namespace ExcelService {
 
         public ExcelObject() {
             log("Excel service Started.");
+            ExcelPackage.LicenseContext = LicenseContext.NonCommercial;
         }
 
         ~ExcelObject() {
