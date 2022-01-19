@@ -54,9 +54,12 @@ jobs:
       run: dotnet build --no-restore -c Release
     - name: Test
       run: dotnet test --no-build --verbosity normal
-    - name: Publish
-      run: dotnet nuget push ./bin/Release/*.nupkg --api-key ${{ secrets.GITHUB_TOKEN }} --skip-duplicate # --no-symbols true --source "github"
+    - name: Publish to Github
+      run: dotnet nuget push ./bin/Release/*.nupkg --api-key ${{ secrets.GITHUB_TOKEN }} --source "github" --skip-duplicate  # --no-symbols true --source "github"
       # uses: brandedoutcast/publish-nuget@v2.5.2
       # with:
         # PROJECT_FILE_PATH: ListClassToExcel/ExcelService.csproj
         # NUGET_KEY: ${{secrets.NUGET_API_KEY}}
+    - name: Publish to NuGet
+      run: dotnet nuget push ./bin/Release/*.nupkg --api-key ${{ secrets.NUGET_TOKEN }} --source "nuget" --skip-duplicate
+
