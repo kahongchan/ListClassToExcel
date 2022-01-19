@@ -11,7 +11,7 @@
     <Version>1.0.4</Version>
     <PackageDescription>Export the C# List to Excel file</PackageDescription>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
-    <!-- <RepositoryUrl>https://github.com/kahongchan/ListClassToExcel.git</RepositoryUrl> -->
+    <RepositoryUrl>https://github.com/kahongchan/ListClassToExcel.git</RepositoryUrl>
   </PropertyGroup>
 
   <ItemGroup>
