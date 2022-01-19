@@ -15,6 +15,9 @@ jobs:
         dotnet-version: ['3.1.x', '5.0.x', '6.0.x']
 
     steps:
+    - uses: actions/labeler@v2
+      with: 
+        repo-token: ${{ secrets.GITHUB_TOKEN }}
     - uses: actions/checkout@v2
     - name: Setup .NET Core 3.1
       uses: actions/setup-dotnet@v1
