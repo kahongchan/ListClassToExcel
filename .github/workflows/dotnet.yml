@@ -39,6 +39,7 @@ jobs:
         source-url: https://nuget.pkg.github.com/${{ github.repository_owner }}/index.json
       env:
         NUGET_AUTH_TOKEN:  ${{secrets.NUGET_API_KEY}}
+
     - name: Restore dependencies
       run: dotnet restore
       env:
@@ -48,7 +49,7 @@ jobs:
     - name: Test
       run: dotnet test --no-build --verbosity normal
     - name: Publish
-      run: dotnet nuget push ./bin/Release/*.nupkg --skip-duplicate" # --no-symbols true --source "github"
+      run: dotnet nuget push ./bin/Release/*.nupkg --skip-duplicate # --no-symbols true --source "github"
       # uses: brandedoutcast/publish-nuget@v2.5.2
       # with:
         # PROJECT_FILE_PATH: ListClassToExcel/ExcelService.csproj
