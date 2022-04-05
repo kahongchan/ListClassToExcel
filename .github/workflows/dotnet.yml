@@ -47,11 +47,11 @@ jobs:
         # NUGET_AUTH_TOKEN:  ${{secrets.NUGET_API_KEY}}
 
     - name: Restore dependencies
-      run: dotnet restore
+      run: dotnet restore ListClassToExcel.sln
       env:
         GITHUB_TOKEN:  ${{secrets.NUGET_API_KEY}}
     - name: Build
-      run: dotnet build --no-restore -c Release
+      run: dotnet build --no-restore -c Release ListClassToExcel.sln
     - name: Test
       run: dotnet test --no-build --verbosity normal
     - name: Publish to Github
