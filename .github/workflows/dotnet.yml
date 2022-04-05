@@ -53,7 +53,7 @@ jobs:
     - name: Build
       run: dotnet build --no-restore -c Release ListClassToExcel.sln
     - name: Test
-      run: dotnet test --no-build --verbosity normal
+      run: dotnet test --no-build --verbosity normal ListClassToExcel.sln
     - name: Publish to Github
       run: dotnet nuget push ./bin/Release/*.nupkg --api-key ${{ secrets.GITHUB_TOKEN }} --source "github" --skip-duplicate  # --no-symbols true --source "github"
       # uses: brandedoutcast/publish-nuget@v2.5.2
